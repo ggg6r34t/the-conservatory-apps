@@ -1,0 +1,37 @@
+---
+description: Patterns for marketing device app-screen mocks (match mobile UI in DeviceFrame)
+globs: components/marketing/app-screens.tsx,components/marketing/device-frame.tsx,components/marketing/chapter-*.tsx
+alwaysApply: false
+---
+
+# App screen mocks
+
+Reference implementation: `PlantDetailScreen` in `components/marketing/app-screens.tsx`. Mobile source of truth: sibling `the-conservatory` repo (`docs/mobile-source-map.md`).
+
+## Layout
+
+- Root: `flex h-full flex-col overflow-hidden bg-surface` — must fill `DeviceFrame` screen (`--device-frame-width`: 292px / 308px at 640px+).
+- Header: `pt-8` for Dynamic Island, `px-4`, serif screen title ~`13px`, `MockIcon` tap targets `h-8 w-8`.
+- Body: single column `flex min-h-0 flex-1 flex-col gap-4 overflow-hidden px-4 pb-3`.
+- Sections below hero: `shrink-0` only — **never** `flex-1` on cards (avoids empty stretched blocks at bottom).
+- Hero/media: **fixed height** (`h-[258px]` for plant detail), `shrink-0`, `rounded-[18px]`. Tune height in ~10px steps to fill frame without crushing content.
+- **Do not** use flex-grow hero + `min-height: 56%` — it breaks balance and squashes lower sections.
+
+## Visual fidelity
+
+- Use linen-light CSS tokens: `bg-surface`, `text-primary`, `bg-(--secondary-fixed)`, `surface-container-*`, `rounded-pill`.
+- Typography: Noto Serif headings (`22px` title, `14px` card title), Manrope UI (`9–11px` labels/buttons, eyebrow `tracking-[0.14em]`).
+- Icons: inline SVG (Lucide-style strokes). Match mobile icon semantics (e.g. stable status = stroke leaf, not filled shield).
+- Copy from mobile empty-state registry / real screen strings, not generic placeholders.
+
+## Images & balance
+
+- `next/image` with `fill` + `object-cover` inside `relative` hero container.
+- If bottom feels empty: increase hero fixed height first; do not stretch lower cards.
+- Partial bottom content (scroll peek) is OK — parent `overflow-hidden` clips naturally.
+
+## Process for new screens
+
+1. Read the matching mobile screen component + route header in `the-conservatory`.
+2. Rebuild section order, spacing, and tokens — scale type for ~280px inner width.
+3. Verify inside `DeviceFrame` in its chapter (e.g. Begin uses `<AppScreen id="plant" />`).
