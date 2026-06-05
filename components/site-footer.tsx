@@ -17,8 +17,8 @@ export function SiteFooter() {
             <p className="type-small mt-3 m-0">© {year} {SITE_NAME}</p>
           </div>
           <div className="footer-columns flex flex-col gap-10 sm:flex-row sm:gap-16 lg:gap-24">
-            <nav aria-label="App" className="footer-column">
-              <p className="footer-column-label m-0">App</p>
+            <nav aria-label="Explore" className="footer-column">
+              <p className="footer-column-label m-0">Explore</p>
               <ul className="footer-column-list m-0 list-none p-0">
                 {FOOTER_APP_LINKS.map((item) => (
                   <li key={item.href}>
